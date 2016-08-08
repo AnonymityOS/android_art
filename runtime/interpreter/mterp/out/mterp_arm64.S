@@ -6075,6 +6075,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6087,13 +6091,13 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+                                // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
     FETCH_ADVANCE_INST 2                // advance rPC, load rINST
                                // optional op; may set condition codes
-    add     w0, w0, w1                              // w0<- op, w0-w3 changed
+    add     w0, w0, w3, asr #8                              // w0<- op, w0-w3 changed
     GET_INST_OPCODE ip                  // extract opcode from rINST
     SET_VREG w0, w9                // vAA<- w0
     GOTO_OPCODE ip                      // jump to next instruction
@@ -6111,6 +6115,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6123,7 +6131,7 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+    asr     w1, w3, #8                            // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
@@ -6148,6 +6156,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6160,7 +6172,7 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+    asr     w1, w3, #8                            // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
@@ -6184,6 +6196,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6196,7 +6212,7 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+    asr     w1, w3, #8                            // optional; typically w1<- ssssssCC (sign extended)
     .if 1
     cbz     w1, common_errDivideByZero
     .endif
@@ -6220,6 +6236,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6232,7 +6252,7 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+    asr     w1, w3, #8                            // optional; typically w1<- ssssssCC (sign extended)
     .if 1
     cbz     w1, common_errDivideByZero
     .endif
@@ -6256,6 +6276,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6268,13 +6292,13 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+                                // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
     FETCH_ADVANCE_INST 2                // advance rPC, load rINST
                                // optional op; may set condition codes
-    and     w0, w0, w1                              // w0<- op, w0-w3 changed
+    and     w0, w0, w3, asr #8                              // w0<- op, w0-w3 changed
     GET_INST_OPCODE ip                  // extract opcode from rINST
     SET_VREG w0, w9                // vAA<- w0
     GOTO_OPCODE ip                      // jump to next instruction
@@ -6292,6 +6316,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6304,13 +6332,13 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+                                // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
     FETCH_ADVANCE_INST 2                // advance rPC, load rINST
                                // optional op; may set condition codes
-    orr     w0, w0, w1                              // w0<- op, w0-w3 changed
+    orr     w0, w0, w3, asr #8                              // w0<- op, w0-w3 changed
     GET_INST_OPCODE ip                  // extract opcode from rINST
     SET_VREG w0, w9                // vAA<- w0
     GOTO_OPCODE ip                      // jump to next instruction
@@ -6328,6 +6356,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6340,13 +6372,13 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+                                // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
     FETCH_ADVANCE_INST 2                // advance rPC, load rINST
                                // optional op; may set condition codes
-    eor     w0, w0, w1                              // w0<- op, w0-w3 changed
+    eor     w0, w0, w3, asr #8                              // w0<- op, w0-w3 changed
     GET_INST_OPCODE ip                  // extract opcode from rINST
     SET_VREG w0, w9                // vAA<- w0
     GOTO_OPCODE ip                      // jump to next instruction
@@ -6364,6 +6396,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6376,7 +6412,7 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+    ubfx    w1, w3, #8, #5                            // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
@@ -6400,6 +6436,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6412,7 +6452,7 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+    ubfx    w1, w3, #8, #5                            // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
@@ -6436,6 +6476,10 @@ artMterpAsmInstructionStart = .L_op_nop
      * This could be an ARM instruction or a function call.  (If the result
      * comes back in a register other than w0, you can override "result".)
      *
+     * You can override "extract" if the extraction of the literal value
+     * from w3 to w1 is not the default "asr w1, w3, #8". The extraction
+     * can be omitted completely if the shift is embedded in "instr".
+     *
      * If "chkzero" is set to 1, we perform a divide-by-zero check on
      * vCC (w1).  Useful for integer division and modulus.
      *
@@ -6448,7 +6492,7 @@ artMterpAsmInstructionStart = .L_op_nop
     lsr     w9, wINST, #8               // w9<- AA
     and     w2, w3, #255                // w2<- BB
     GET_VREG w0, w2                     // w0<- vBB
-    asr    w1, w3, #8                   // w1<- ssssssCC (sign extended)
+    ubfx    w1, w3, #8, #5                            // optional; typically w1<- ssssssCC (sign extended)
     .if 0
     cbz     w1, common_errDivideByZero
     .endif
